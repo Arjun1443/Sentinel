@@ -1,9 +1,218 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Sentinel is an evidence-first repository security review dashboard."><title>Sentinel | Repository Security Review</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.mjs"></script></head>
-<body><header><div class="wrap top"><strong class="brand"><span aria-hidden="true">◈</span> Sentinel</strong><a href="https://github.com/Arjun1443/Sentinel">GitHub repository ↗</a></div></header>
-<main class="wrap">
-<section class="hero"><p class="eyebrow">REPOSITORY SECURITY REVIEW</p><h1>Find what needs fixing.</h1><p>Review security findings with file-level evidence, apply suggested changes, and measure what improved on your next scan.</p></section>
-<section class="panel inputs"><h2>Start a scan</h2><form id="repo-form"><label for="repo">Public GitHub repository</label><div class="field"><input id="repo" type="url" required placeholder="https://github.com/owner/repository"><button id="scan-repo">Scan repository</button></div></form><div class="actions"><label class="secondary upload">Select local files<input id="files" type="file" multiple></label><button id="demo" class="secondary">Load built-in demo</button><button id="revised" class="secondary" hidden>Scan revised demo</button></div><p id="status" role="status">Local files stay in your browser. Scans cover supported text files.</p></section>
-<section id="results" hidden aria-label="Scan results"><div class="result-head"><div><p id="source" class="eyebrow"></p><h2>Scan results</h2><p id="metadata"></p></div><button id="export" class="secondary">Download Markdown report</button></div>
-<div class="metrics" id="metrics"></div><details><summary>How the score is calculated</summary><p>Start at 100. Subtract 18 per critical, 10 per high, 4 per medium and 1 per low finding. Subtract 15 more per potential exposed credential. Minimum score is zero. A score reflects matches in the files scanned.</p></details><p id="comparison" class="comparison" hidden></p>
-<div class="result-head"><h2>Findings</h2><label>Severity <select id="filter"><option value="">All levels</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label></div><div id="findings"></div></section>
-</main><footer class="wrap">Sentinel · Evidence-first static review</footer></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Review a repository, trace each finding to its source, and verify a fix across two Git commits."
+    />
+    <meta name="theme-color" content="#0d181a" />
+    <title>Sentinel · Repository security review</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.mjs"></script>
+  </head>
+  <body>
+    <a class="skip" href="#workbench">Skip to scanner</a>
+    <header>
+      <nav class="wrap">
+        <a class="brand" href="/" aria-label="Sentinel home"
+          ><i class="mark" aria-hidden="true"></i>Sentinel</a
+        >
+        <div class="navlinks">
+          <a href="#workbench">Scanner</a><a href="#history">History</a
+          ><a class="repo-link" href="https://github.com/Arjun1443/Sentinel">GitHub ↗</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="signal"></span> REPOSITORY SECURITY</p>
+            <h1>Show the fix.<br /><em>Verify the change.</em></h1>
+            <p>Trace a finding to its source, review the patch, and see what a second scan clears.</p>
+            <div class="actions">
+              <button type="button" id="case">Replay verified fix <span aria-hidden="true">↗</span></button
+              ><a class="text-link" href="#workbench">Scan your code ↓</a>
+            </div>
+          </div>
+          <aside class="preview" aria-label="Preview of the verified case">
+            <div class="preview-top">
+              <span class="signal"></span> Commit comparison <span class="mono">vercel.json</span>
+            </div>
+            <div class="preview-body">
+              <small>BROWSER POLICY</small>
+              <h2>Restrict form submissions</h2>
+              <p>Arjun1443 / Sentinel</p>
+              <div class="diff-preview">
+                <span>Before</span><code>form-action omitted</code><span>After</span
+                ><code>form-action 'self'</code>
+              </div>
+              <div class="preview-foot"><i></i> Two pinned revisions <b>1 fix</b></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+      <div class="wrap main">
+        <section class="workbench" id="workbench" aria-label="Start a scan">
+          <div class="bench-head">
+            <h2>Run a scan</h2>
+            <div class="mode" aria-label="Scan input">
+              <button type="button" data-mode="github" aria-pressed="true">GitHub</button
+              ><button type="button" data-mode="local" aria-pressed="false">Local files</button
+              ><button type="button" data-mode="sample" aria-pressed="false">Samples</button>
+            </div>
+          </div>
+          <form id="repo-form" class="pane" data-pane="github">
+            <label for="repo">Public GitHub repository</label>
+            <div class="field">
+              <input
+                id="repo"
+                type="url"
+                placeholder="https://github.com/owner/repository"
+                required
+              /><button type="submit" id="scan-repo">Scan repository</button>
+            </div>
+            <details class="options" id="revision-options">
+              <summary>Compare specific revisions</summary>
+              <div class="cols">
+                <label
+                  >Baseline commit
+                  <input
+                    id="baseline"
+                    placeholder="Optional full commit SHA"
+                    pattern="[a-fA-F0-9]{40}" /></label
+                ><label
+                  >Current commit
+                  <input id="revision" placeholder="Default branch HEAD" pattern="[a-fA-F0-9]{40}"
+                /></label>
+              </div>
+            </details>
+          </form>
+          <div class="pane" data-pane="local" hidden>
+            <p>
+              Select up to 60 Python, JavaScript, TypeScript, configuration or manifest files. Source is
+              processed in this browser.
+            </p>
+            <label class="check"
+              ><input id="allow-osv" type="checkbox" /> Check exact package names and versions against
+              OSV</label
+            ><label class="upload secondary"
+              >Select local files<input id="files" type="file" multiple
+            /></label>
+            <label class="upload secondary"
+              >Import SARIF<input id="sarif-file" type="file" accept=".sarif,.json"
+            /></label>
+          </div>
+          <div class="pane" data-pane="sample" hidden>
+            <div class="sample-row">
+              <div>
+                <h3>Configuration sample</h3>
+                <p>Review two settings and compare the revised files.</p>
+              </div>
+              <button class="secondary" id="demo">Load built-in demo</button
+              ><button id="revised" hidden>Scan revised demo</button>
+            </div>
+            <div class="sample-row">
+              <div>
+                <h3>Live dependency audit</h3>
+                <p>Look up npm package ansi-regex@5.0.0 in OSV.</p>
+              </div>
+              <button class="secondary" id="audit-demo">Check sample dependency</button>
+            </div>
+          </div>
+          <p id="status" role="status">Ready to scan.</p>
+        </section>
+        <section id="results" hidden tabindex="-1">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow" id="source"></p>
+              <h2 id="result-title">Review results</h2>
+            </div>
+            <div class="actions">
+              <button class="secondary" id="export">Markdown ↓</button
+              ><button class="secondary" id="sarif">SARIF ↓</button>
+            </div>
+          </div>
+          <p id="metadata" class="meta"></p>
+          <div id="proof" class="proof" hidden></div>
+          <div class="metrics" id="metrics"></div>
+          <div class="scan-foot">
+            <p id="audit-state"></p>
+            <details class="options">
+              <summary>Score formula</summary>
+              <p>
+                Start at 100 and deduct 18 per critical, 10 per high, 4 per medium, and 1 per low finding. A
+                potential credential costs an additional 15. Ungraded advisories need review. Minimum score
+                is zero.
+              </p>
+            </details>
+          </div>
+          <div id="comparison" class="comparison" hidden></div>
+          <section class="ask" aria-label="Ask this scan">
+            <div>
+              <h3>Ask this scan</h3>
+              <p>Answers use the findings and revisions in this review. Questions stay on this device.</p>
+            </div>
+            <form id="ask-form" class="field">
+              <label class="sr" for="question">Question about this scan</label
+              ><input
+                id="question"
+                type="text"
+                maxlength="400"
+                placeholder="What should I fix first?"
+                required
+              /><button>Ask</button>
+            </form>
+            <div class="suggestions">
+              <button type="button" data-question="What should I fix first?">
+                What should I fix first?</button
+              ><button type="button" data-question="What changed since the baseline?">What changed?</button
+              ><button type="button" data-question="How do I verify the fix?">
+                How do I verify the fix?
+              </button>
+            </div>
+            <div id="answer" class="brief" aria-live="polite" hidden></div>
+          </section>
+          <div class="list-head">
+            <h2>Findings</h2>
+            <div class="filters">
+              <label
+                >View<select id="view-filter">
+                  <option value="current">Current findings</option>
+                </select></label
+              ><label
+                >Severity<select id="filter">
+                  <option value="">All levels</option>
+                  <option value="critical">Critical</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                  <option value="review">Ungraded</option>
+                </select></label
+              >
+            </div>
+          </div>
+          <div id="findings"></div>
+        </section>
+        <section id="history">
+          <div class="section-title">
+            <div>
+              <h2>Recent public scans</h2>
+              <p>Saved in this browser. Select a revision to use it as a baseline.</p>
+            </div>
+            <button class="secondary" id="clear-history" hidden>Clear history</button>
+          </div>
+          <div id="history-list"></div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap">
+        <strong>Sentinel</strong
+        ><a href="https://github.com/Arjun1443/Sentinel">Source and verification instructions ↗</a>
+      </div>
+    </footer>
+  </body>
+</html>

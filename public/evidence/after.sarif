@@ -1,0 +1,92 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "toolExecutionNotifications": []
+        }
+      ],
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "Semgrep OSS",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Review the origin of HTML assigned to this element. Use textContent for plain text."
+              },
+              "help": {
+                "markdown": "Review the origin of HTML assigned to this element. Use textContent for plain text.",
+                "text": "Review the origin of HTML assigned to this element. Use textContent for plain text."
+              },
+              "id": "sentinel-browser-html",
+              "name": "sentinel-browser-html",
+              "properties": {
+                "precision": "very-high",
+                "tags": []
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: sentinel-browser-html"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Review the destinations forms may submit to and add a suitable form-action directive."
+              },
+              "help": {
+                "markdown": "Review the destinations forms may submit to and add a suitable form-action directive.",
+                "text": "Review the destinations forms may submit to and add a suitable form-action directive."
+              },
+              "id": "sentinel-form-destinations",
+              "name": "sentinel-form-destinations",
+              "properties": {
+                "precision": "very-high",
+                "tags": []
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: sentinel-form-destinations"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Verify the service certificate and configure a trusted CA where needed."
+              },
+              "help": {
+                "markdown": "Verify the service certificate and configure a trusted CA where needed.",
+                "text": "Verify the service certificate and configure a trusted CA where needed."
+              },
+              "id": "sentinel-python-tls",
+              "name": "sentinel-python-tls",
+              "properties": {
+                "precision": "very-high",
+                "tags": []
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: sentinel-python-tls"
+              }
+            }
+          ],
+          "semanticVersion": "1.186.0"
+        }
+      },
+      "versionControlProvenance": [
+        {
+          "repositoryUri": "https://github.com/Arjun1443/Sentinel",
+          "revisionId": "16654c9e991ccf5eba76ae65f95214c20410563a"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json"
+}

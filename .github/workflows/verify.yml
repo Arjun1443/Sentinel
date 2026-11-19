@@ -7,5 +7,20 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - run: npm ci --ignore-scripts --no-audit
       - name: Run Node tests
         run: npm test
+  semgrep:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Install Semgrep Community Edition
+        run: |
+          python3 -m venv "$RUNNER_TEMP/sentinel-semgrep"
+          "$RUNNER_TEMP/sentinel-semgrep/bin/pip" install --disable-pip-version-check semgrep==1.186.0
+      - name: Produce a local-rule SARIF report
+        run: '"$RUNNER_TEMP/sentinel-semgrep/bin/semgrep" scan --config .semgrep/sentinel.yml --metrics off --disable-version-check --sarif --output sentinel.sarif .'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sentinel-semgrep-report
+          path: sentinel.sarif

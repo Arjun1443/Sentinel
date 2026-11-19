@@ -1,0 +1,23 @@
+rules:
+  - id: sentinel-form-destinations
+    languages: [json]
+    message: Review the destinations forms may submit to and add a suitable form-action directive.
+    severity: WARNING
+    patterns:
+      - pattern: '{"key": "Content-Security-Policy", "value": $POLICY}'
+      - metavariable-regex:
+          metavariable: $POLICY
+          regex: '(?i)^(?!.*\bform-action\b).+'
+    paths:
+      include:
+        - '**/vercel.json'
+  - id: sentinel-python-tls
+    languages: [python]
+    message: Verify the service certificate and configure a trusted CA where needed.
+    severity: ERROR
+    pattern: requests.$METHOD(..., verify=False, ...)
+  - id: sentinel-browser-html
+    languages: [javascript, typescript]
+    message: Review the origin of HTML assigned to this element. Use textContent for plain text.
+    severity: WARNING
+    pattern: $NODE.innerHTML = $VALUE

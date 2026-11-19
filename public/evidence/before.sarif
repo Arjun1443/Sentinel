@@ -1,0 +1,122 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "toolExecutionNotifications": []
+        }
+      ],
+      "results": [
+        {
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "vercel.json",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "endColumn": 132,
+                  "endLine": 8,
+                  "snippet": {
+                    "text": "      {\"key\": \"Content-Security-Policy\", \"value\": \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'\"},"
+                  },
+                  "startColumn": 7,
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Review the destinations forms may submit to and add a suitable form-action directive."
+          },
+          "properties": {},
+          "ruleId": "sentinel-form-destinations"
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "Semgrep OSS",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Review the origin of HTML assigned to this element. Use textContent for plain text."
+              },
+              "help": {
+                "markdown": "Review the origin of HTML assigned to this element. Use textContent for plain text.",
+                "text": "Review the origin of HTML assigned to this element. Use textContent for plain text."
+              },
+              "id": "sentinel-browser-html",
+              "name": "sentinel-browser-html",
+              "properties": {
+                "precision": "very-high",
+                "tags": []
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: sentinel-browser-html"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Review the destinations forms may submit to and add a suitable form-action directive."
+              },
+              "help": {
+                "markdown": "Review the destinations forms may submit to and add a suitable form-action directive.",
+                "text": "Review the destinations forms may submit to and add a suitable form-action directive."
+              },
+              "id": "sentinel-form-destinations",
+              "name": "sentinel-form-destinations",
+              "properties": {
+                "precision": "very-high",
+                "tags": []
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: sentinel-form-destinations"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Verify the service certificate and configure a trusted CA where needed."
+              },
+              "help": {
+                "markdown": "Verify the service certificate and configure a trusted CA where needed.",
+                "text": "Verify the service certificate and configure a trusted CA where needed."
+              },
+              "id": "sentinel-python-tls",
+              "name": "sentinel-python-tls",
+              "properties": {
+                "precision": "very-high",
+                "tags": []
+              },
+              "shortDescription": {
+                "text": "Semgrep Finding: sentinel-python-tls"
+              }
+            }
+          ],
+          "semanticVersion": "1.186.0"
+        }
+      },
+      "versionControlProvenance": [
+        {
+          "repositoryUri": "https://github.com/Arjun1443/Sentinel",
+          "revisionId": "042bb9ea0a170b254297b8d72b682682da3c9f17"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json"
+}

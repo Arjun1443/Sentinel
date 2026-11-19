@@ -1,0 +1,38 @@
+{
+  "priority": [
+    "What should I fix first", "Which issue is most urgent", "Where should the team start", "Give me the highest priority finding",
+    "Rank the security warnings", "What needs immediate attention", "Show the most important risk", "Pick the first item to address",
+    "Which alerts have highest severity", "Help me prioritize my work", "What is the top priority today", "What deserves attention first",
+    "What needs to be done before release", "Give me the most critical remaining issue"
+  ],
+  "impact": [
+    "Why does this matter", "What is the business impact", "Explain the risk in plain English", "How might this affect users",
+    "What is the consequence of this setting", "Why is this flagged", "Explain why this warning exists", "What goes wrong if it stays open",
+    "What does this finding mean", "What can happen to our data", "Why is this a concern", "Tell me the impact of this issue",
+    "Why care about this warning", "Describe the possible consequences"
+  ],
+  "fix": [
+    "How can I fix this", "What change should I make", "How do we repair the setting", "Show the recommended remediation",
+    "What value should replace the old configuration", "How should I update the package", "Which patch should we apply", "How do I correct this issue",
+    "What edits are recommended", "How do we resolve the finding", "Give me the recommended fix", "How can I remove this warning",
+    "What should I change in my code", "Suggest a safer setting"
+  ],
+  "verify": [
+    "How do I verify the fix", "Which test should I run", "How do we validate the patch", "How can I confirm the change worked",
+    "What regression test is needed", "How do I check the result after patching", "How can I prove the fix is active",
+    "Which checks confirm this is resolved", "What can I test in staging", "How do I verify the response header", "How can I retest the package",
+    "Show the validation step", "What evidence confirms the fix", "How can we test the change"
+  ],
+  "change": [
+    "What changed since the baseline", "Did the score improve", "How many issues were fixed", "What is new in this revision",
+    "Compare before and after", "What changed between commits", "Which findings remain after the rescan", "Show the difference from the prior scan",
+    "What was resolved in the latest revision", "What is the score delta", "Have any new issues appeared", "Which warnings disappeared",
+    "How much did the score increase", "Summarize the comparison"
+  ],
+  "scope": [
+    "What did this scan cover", "How many files were scanned", "What was excluded", "Did you check every dependency",
+    "Which versions were checked by OSV", "Explain the scan coverage", "What are the sampling limits", "How much of my repository was reviewed",
+    "Were any files skipped", "What sources did you inspect", "Was the dependency audit complete", "What is the scope of this review",
+    "How many package versions were inspected", "Which files were included"
+  ]
+}

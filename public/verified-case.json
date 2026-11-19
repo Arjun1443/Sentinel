@@ -1,0 +1,14 @@
+{
+  "repo": "Arjun1443/Sentinel",
+  "path": "vercel.json",
+  "before": {
+    "sha": "042bb9ea0a170b254297b8d72b682682da3c9f17",
+    "blob": "5579c819feeb5f6f19460f50636719d88c39823d",
+    "content": "{\n  \"framework\": null,\n  \"outputDirectory\": \"public\",\n  \"headers\": [{\n    \"source\": \"/(.*)\",\n    \"headers\": [\n      {\"key\": \"X-Content-Type-Options\", \"value\": \"nosniff\"},\n      {\"key\": \"Content-Security-Policy\", \"value\": \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'\"},\n      {\"key\": \"Referrer-Policy\", \"value\": \"strict-origin-when-cross-origin\"}\n    ]\n  }]\n}\n"
+  },
+  "after": {
+    "sha": "16654c9e991ccf5eba76ae65f95214c20410563a",
+    "blob": "864bf08da5110333c11c47d2c2d1c463539dc029",
+    "content": "{\n  \"framework\": null,\n  \"outputDirectory\": \"public\",\n  \"headers\": [{\n    \"source\": \"/(.*)\",\n    \"headers\": [\n      {\"key\": \"X-Content-Type-Options\", \"value\": \"nosniff\"},\n      {\"key\": \"Content-Security-Policy\", \"value\": \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'\"},\n      {\"key\": \"Referrer-Policy\", \"value\": \"strict-origin-when-cross-origin\"}\n    ]\n  }]\n}\n"
+  }
+}
